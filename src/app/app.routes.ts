@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { CourseManagerComponent } from './pages/course/course.component';
+import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
   {
@@ -12,6 +14,11 @@ export const routes: Routes = [
       import('./pages/register/register.component').then(
         (m) => m.RegisterComponent
       ),
+  },
+  {
+    path: 'admin/courses',
+    component: CourseManagerComponent,
+    canActivate: [adminGuard],
   },
   // {
   //   path: 'dashboard',

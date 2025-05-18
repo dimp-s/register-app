@@ -1,0 +1,77 @@
+<mat-card class="mb-4 p-4">
+  <h2 class="mb-3">{{ isEditing() ? "Edit Course" : "Add New Course" }}</h2>
+  <form
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+    class="d-flex flex-column gap-3"
+  >
+    <mat-form-field appearance="outline" class="w-100">
+      <label>Course Name</label>
+      <input
+        matInput
+        placeholder="Enter course name"
+        formControlName="name"
+        required
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100">
+      <label>Credit Hours</label>
+      <input
+        matInput
+        type="number"
+        placeholder="Enter credit hours"
+        formControlName="creditHours"
+        required
+      />
+    </mat-form-field>
+
+    <div class="d-flex gap-2">
+      <button mat-raised-button color="primary" type="submit">
+        {{ isEditing() ? "Update Course" : "Add Course" }}
+      </button>
+      <button
+        *ngIf="isEditing()"
+        mat-stroked-button
+        color="warn"
+        type="button"
+        (click)="cancelEdit()"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</mat-card>
+
+<mat-card class="p-3">
+  <h3 class="mb-3">Available Courses</h3>
+
+  @if (courses() && courses().length > 0) { @for (course of courses(); track
+  course.id) {
+  <div
+    class="d-flex justify-content-between align-items-center border-bottom py-2"
+  >
+    <div>
+      <strong>{{ course.name }}</strong>
+      <span class="text-muted">({{ course.creditHours }} hrs)</span>
+    </div>
+    <div>
+      <button mat-icon-button color="primary" (click)="edit(course)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="delete(course.id!)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+  } } @else {
+  <p class="text-muted">No courses available.</p>
+  }
+</mat-card>
+
+<div class="mt-4 text-end">
+  <button mat-stroked-button color="accent" (click)="logout()">
+    <mat-icon class="me-1">logout</mat-icon>
+    Logout
+  </button>
+</div>
