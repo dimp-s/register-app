@@ -1,8 +1,14 @@
 import { Routes } from '@angular/router';
 import { CourseManagerComponent } from './pages/course/course.component';
 import { adminGuard } from './guards/admin.guard';
+import { HomeComponent } from './pages/home/home.component';
 
 export const routes: Routes = [
+  {
+    path: '',
+    component: HomeComponent,
+    pathMatch: 'full',
+  },
   {
     path: 'login',
     loadComponent: () =>
@@ -14,6 +20,11 @@ export const routes: Routes = [
       import('./pages/register/register.component').then(
         (m) => m.RegisterComponent
       ),
+  },
+  {
+    path: 'home',
+    loadComponent: () =>
+      import('./pages/home/home.component').then((m) => m.HomeComponent),
   },
   {
     path: 'admin/courses',
