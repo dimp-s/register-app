@@ -28,33 +28,6 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
   ],
   templateUrl: './login.component.html',
 })
-// export class LoginComponent {
-//   form: FormGroup;
-//   authService = inject(AuthService);
-//   router = inject(Router);
-//   constructor(private fb: FormBuilder) {
-//     this.form = this.fb.group({
-//       email: [''],
-//       password: [''],
-//     });
-//   }
-
-//   login() {
-//     const request = {
-//       email: this.form.value.email,
-//       passwordHash: this.form.value.password, // plain text password, backend hashes it
-//     };
-//     this.authService.login(request).subscribe({
-//       next: (response) => {
-//         console.log('Logged in!', response);
-//         localStorage.setItem('token', response.token);
-//       },
-//       error: (err) => {
-//         console.error('Login failed', err);
-//       },
-//     });
-//   }
-// }
 export class LoginComponent {
   form: FormGroup;
   authService = inject(AuthService);
@@ -81,14 +54,12 @@ export class LoginComponent {
     };
 
     this.authService.login(request).subscribe({
-      next: (response) => {
-        const token = response.token;
-        localStorage.setItem('token', token);
-        const role = this.getRoleFromToken(token);
+      next: () => {
+        const role = this.authService.role();
         if (role === 'Admin') {
           this.router.navigate(['/admin/courses']);
         } else {
-          this.router.navigate(['/register']);
+          this.router.navigate(['/home']);
         }
       },
       error: (err) => {
@@ -102,21 +73,21 @@ export class LoginComponent {
     });
   }
 
-  private getRoleFromToken(token: string): string | null {
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
+  // private getRoleFromToken(token: string): string | null {
+  //   try {
+  //     const payload = JSON.parse(atob(token.split('.')[1]));
 
-      // This is the fully-qualified key where ASP.NET Core puts the role claim
-      const roleKey =
-        'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
+  //     // This is the fully-qualified key where ASP.NET Core puts the role claim
+  //     const roleKey =
+  //       'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
 
-      const role = payload[roleKey];
-      console.log('Decoded Role:', role);
+  //     const role = payload[roleKey];
+  //     console.log('Decoded Role:', role);
 
-      return role ?? null;
-    } catch (e) {
-      console.error('Failed to decode token', e);
-      return null;
-    }
-  }
+  //     return role ?? null;
+  //   } catch (e) {
+  //     console.error('Failed to decode token', e);
+  //     return null;
+  //   }
+  // }
 }

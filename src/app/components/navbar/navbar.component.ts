@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,8 +16,14 @@ import { MatButtonModule } from '@angular/material/button';
 
       <span class="spacer"></span>
 
+      @if(authService.isLoggedIn()){
+      <button mat-button (click)="authService.logout()">Logout</button>
+      @if(authService.role() === 'Admin'){
+      <span class="me-4 fw-bold">Hi Admin</span>
+      } } @else {
       <a mat-button routerLink="/login">Login</a>
       <a mat-button routerLink="/register">Register</a>
+      }
     </mat-toolbar>
   `,
   styles: [
@@ -39,4 +46,6 @@ import { MatButtonModule } from '@angular/material/button';
     `,
   ],
 })
-export class NavbarComponent {}
+export class NavbarComponent {
+  authService = inject(AuthService);
+}
