@@ -17,7 +17,7 @@ import { RouterModule } from '@angular/router';
           Get Started
         </button>
       </div>
-      <img src="https://via.placeholder.com/500x300" alt="Hero image" />
+      <img src="https://static.vecteezy.com/system/resources/previews/016/466/991/non_2x/online-education-concept-illustration-study-learning-online-with-laptop-tablet-smartphone-and-headphones-from-home-cozy-online-learing-and-education-with-coffee-and-learning-books-free-png.png" alt="Hero image" />
     </div>
 
     <section class="stats-section">
