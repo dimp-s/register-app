@@ -1,35 +1,38 @@
 import { Routes } from '@angular/router';
-import { CourseManagerComponent } from './pages/course/course.component';
 import { adminGuard } from './guards/admin.guard';
-import { HomeComponent } from './pages/home/home.component';
+import CourseManagerComponent from './pages/course/course.component';
+
 
 export const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    redirectTo: 'home',
     pathMatch: 'full',
   },
   {
     path: 'login',
     loadComponent: () =>
-      import('./pages/login/login.component').then((m) => m.LoginComponent),
+      import('./pages/login/login.component')
   },
   {
     path: 'register',
     loadComponent: () =>
-      import('./pages/register/register.component').then(
-        (m) => m.RegisterComponent
-      ),
+      import('./pages/register/register.component')
   },
   {
     path: 'home',
     loadComponent: () =>
-      import('./pages/home/home.component').then((m) => m.HomeComponent),
+      import('./pages/home/home.component')
   },
   {
     path: 'admin/courses',
-    component: CourseManagerComponent,
+    loadComponent: () => import('./pages/course/course.component'),
     canActivate: [adminGuard],
+  },
+  {
+    path: 'unauthorized',
+    loadComponent: () =>
+      import('./pages/error/unauthorized/unauthorized.component'),
   },
   // {
   //   path: 'dashboard',
@@ -38,5 +41,4 @@ export const routes: Routes = [
   //       (m) => m.DashboardComponent
   //     ),
   // },
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];

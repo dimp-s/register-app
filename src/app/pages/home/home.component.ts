@@ -94,7 +94,7 @@ import { RouterModule } from '@angular/router';
     color: #666;
   }`,
 })
-export class HomeComponent {
+export default class HomeComponent {
   private http = inject(HttpClient);
 
   totalCourses = signal<number>(0);

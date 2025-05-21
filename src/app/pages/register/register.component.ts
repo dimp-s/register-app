@@ -28,7 +28,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
   ],
   templateUrl: './register.component.html',
 })
-export class RegisterComponent {
+export default class RegisterComponent {
   form: FormGroup;
   authService = inject(AuthService);
   snackbar = inject(MatSnackBar);
