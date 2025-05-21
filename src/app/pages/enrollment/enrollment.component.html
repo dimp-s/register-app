@@ -1,0 +1,43 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Available Courses</h2>
+
+  @if (loading()) {
+  <div class="text-center my-4">
+    <mat-progress-spinner
+      mode="indeterminate"
+      color="primary"
+    ></mat-progress-spinner>
+  </div>
+  } @else {
+  <div class="row g-4">
+    @for (course of courses(); track course.courseId) {
+    <div class="col-md-6 col-lg-4">
+      <mat-card class="h-100 shadow-sm">
+        <mat-card-header>
+          <mat-card-title>{{ course.courseName }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Credit Hours: {{ course.creditHours }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          @if (course.isEnrolled) {
+          <button mat-flat-button color="primary" class="w-100" disabled>
+            Already Enrolled
+          </button>
+          } @else {
+          <button
+            mat-raised-button
+            color="accent"
+            class="w-100"
+            (click)="enroll(course.courseId)"
+          >
+            Enroll
+          </button>
+          }
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    }
+  </div>
+  }
+</div>
