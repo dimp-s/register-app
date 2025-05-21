@@ -7,7 +7,6 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,7 +27,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
   ],
   templateUrl: './login.component.html',
 })
-export class LoginComponent {
+export default class LoginComponent {
   form: FormGroup;
   authService = inject(AuthService);
   router = inject(Router);

@@ -18,8 +18,11 @@ import { AuthService } from '../../services/auth/auth.service';
 
       @if(authService.isLoggedIn()){
       <button mat-button (click)="authService.logout()">Logout</button>
+    
       @if(authService.role() === 'Admin'){
-      <span class="me-4 fw-bold">Hi Admin</span>
+      <span class="me-4 fw-bold">Admin Board</span>
+      }@else {
+        <span class="me-4 fw-bold">Welcome {{authService.userName()}}!</span>
       } } @else {
       <a mat-button routerLink="/login">Login</a>
       <a mat-button routerLink="/register">Register</a>

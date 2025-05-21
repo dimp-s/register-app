@@ -32,7 +32,7 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './course.component.html',
   styleUrl: './course.component.css',
 })
-export class CourseManagerComponent {
+export default class CourseComponent {
   private courseService = inject(CourseManagerService);
   private fb = inject(FormBuilder);
   private router = inject(Router);

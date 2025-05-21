@@ -24,6 +24,8 @@ export class AuthService {
 
   readonly isLoggedIn = computed(() => !!this.jwtToken());
   readonly role = computed(() => this.getRoleFromToken(this.jwtToken()));
+  readonly userName = computed(() => this.getUsernameFromToken(this.jwtToken()));
+
 
   http = inject(HttpClient);
   router = inject(Router);
@@ -51,12 +53,34 @@ export class AuthService {
   }
 
   getRoleFromToken(token: string | null): string | null {
-    if (!token) return null;
     try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
+      const payload = this.getTokenPayload(token);
       const roleKey =
         'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
       return payload[roleKey] ?? null;
+    } catch (e) {
+      console.error('Failed to extract role.', e);
+      return null;
+    }
+  } 
+
+  getUsernameFromToken(token: string | null): string | null {
+    try {
+      const payload = this.getTokenPayload(token);
+      const nameKey =
+        "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
+      return payload[nameKey] ?? null;
+    } catch (e) {
+      console.error('Failed to extract name.', e);
+      return null;
+    }
+  } 
+
+  getTokenPayload(token: string | null){
+    if (!token) return null;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload;
     } catch (e) {
       console.error('Failed to decode token', e);
       return null;
