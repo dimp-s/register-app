@@ -16,6 +16,15 @@
         <mat-card-header>
           <mat-card-title>{{ course.courseName }}</mat-card-title>
         </mat-card-header>
+        <!-- Placeholder Image with Bootstrap styling -->
+        <div class="text-center p-2">
+          <img
+            mat-card-image
+            [src]= "courseImgUrl"
+            alt="Course Image"
+            class="img-fluid w-75"
+          />
+        </div>
         <mat-card-content>
           <p>Credit Hours: {{ course.creditHours }}</p>
         </mat-card-content>

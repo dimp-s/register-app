@@ -12,6 +12,7 @@ export interface EnrollmentDto {
   courseId: number;
   courseName: string;
   creditHours: number;
+  description: string;
   isEnrolled: boolean;
 }
 

@@ -21,6 +21,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   styleUrl: './enrollment.component.css',
 })
 export default class EnrollmentComponent {
+  courseImgUrl = "https://static.vecteezy.com/system/resources/previews/024/043/963/original/book-icon-clipart-transparent-background-free-png.png";
   courses = signal<EnrollmentDto[]>([]);
   loading = signal<boolean>(true);
 
