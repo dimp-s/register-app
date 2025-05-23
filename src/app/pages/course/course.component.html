@@ -26,6 +26,16 @@
       />
     </mat-form-field>
 
+    <mat-form-field appearance="outline" class="w-100">
+      <label>Description</label>
+      <input
+        matInput
+        placeholder="Enter Description"
+        formControlName="description"
+        required
+      />
+    </mat-form-field>
+
     <div class="d-flex gap-2">
       <button mat-raised-button color="primary" type="submit">
         {{ isEditing() ? "Update Course" : "Add Course" }}
@@ -53,7 +63,8 @@
   >
     <div>
       <strong>{{ course.name }}</strong>
-      <span class="text-muted"> ({{ course.creditHours }} hrs)</span>
+      <span class="text-muted"> ({{ course.creditHours }} hrs)</span><br/>
+      <p>{{course.description}}</p>
     </div>
     <div>
       <button mat-icon-button color="primary" (click)="edit(course)">

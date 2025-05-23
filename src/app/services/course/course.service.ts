@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { tap } from 'rxjs';
 
-export interface ResponseDto {
+interface ResponseDto {
   message: string;
   error?: string;
   data?: CourseDto[];
@@ -11,6 +11,7 @@ export interface ResponseDto {
 export interface CourseDto {
   id?: number;
   name: string;
+  description:string;
   creditHours: number;
 }
 

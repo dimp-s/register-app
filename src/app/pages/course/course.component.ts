@@ -45,6 +45,7 @@ export default class CourseComponent {
   form: FormGroup = this.fb.group({
     name: ['', Validators.required],
     creditHours: ['', Validators.required],
+    description: ['']
   });
 
   isEditing = computed(() => this.editingCourse() !== null);
@@ -63,6 +64,7 @@ export default class CourseComponent {
         this.form.setValue({
           name: course.name,
           creditHours: course.creditHours,
+          description: course.description
         });
       } else {
         this.form.reset();

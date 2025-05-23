@@ -16,14 +16,16 @@ import { AuthService } from '../../services/auth/auth.service';
 
       <span class="spacer"></span>
 
-      @if(authService.isLoggedIn()){
-      <button mat-button (click)="authService.logout()">Logout</button>
-    
-      @if(authService.role() === 'Admin'){
+      @if (authService.isLoggedIn()) { @if (authService.role() === 'Admin') {
       <span class="me-4 fw-bold">Admin Board</span>
-      }@else {
-        <span class="me-4 fw-bold">Welcome {{authService.userName()}}!</span>
-      } } @else {
+      } @else {
+      <span class="me-4 fw-bold">Welcome {{ authService.userName() }}!</span>
+      <a mat-button routerLink="/browseCourse">Browse Courses</a>
+      }
+
+      <!-- Logout stays after all other elements -->
+      <button mat-button (click)="authService.logout()">Logout</button>
+      } @else {
       <a mat-button routerLink="/login">Login</a>
       <a mat-button routerLink="/register">Register</a>
       }
