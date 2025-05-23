@@ -1,0 +1,28 @@
+.course-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.course-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+.course-card.expanded {
+  border-left: 5px solid #3f51b5;
+  background-color: #f9f9f9;
+}
+
+.drop-button {
+  font-weight: bold;
+  margin-top: 12px;
+  background-color: #d32f2f !important; /* vivid red */
+  color: white !important;
+  border-radius: 9999px; /* fully rounded button */
+  padding: 10px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.drop-button:hover {
+  background-color: #b71c1c !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}

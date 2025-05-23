@@ -1,0 +1,99 @@
+<div class="container py-5">
+  <!-- Profile Card -->
+  <mat-card
+    class="mb-5 p-5 shadow-lg"
+    style="max-width: 960px; margin: auto; border-radius: 16px"
+  >
+    <div class="d-flex align-items-center gap-4">
+      <img
+        [src]="dashboard().profileImage || 'images/default-avatar.png'"
+        alt="Profile"
+        class="rounded-circle border border-secondary shadow"
+        width="120"
+        height="120"
+      />
+
+      <div class="flex-grow-1">
+        <h2 class="fw-bold mb-1">{{ fullName() }}</h2>
+        <p class="text-secondary mb-3">Student</p>
+
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="fileInput.click()"
+          class="rounded-pill shadow px-4 py-2 d-inline-flex align-items-center gap-2"
+        >
+          <mat-icon>upload</mat-icon>
+          Upload Profile Photo
+        </button>
+        <input
+          #fileInput
+          type="file"
+          hidden
+          (change)="onFileSelected($event)"
+        />
+      </div>
+    </div>
+  </mat-card>
+
+  <!-- Courses List -->
+  <mat-card class="shadow-lg p-4" style="max-width: 1000px; margin: auto">
+    <mat-card-title class="text-2xl mb-4">Enrolled Courses</mat-card-title>
+    <ng-container *ngIf="loading(); else content">
+      <div
+        class="d-flex justify-content-center align-items-center"
+        style="height: 300px"
+      >
+        <mat-progress-spinner
+          mode="indeterminate"
+          diameter="60"
+        ></mat-progress-spinner>
+      </div>
+    </ng-container>
+    <ng-template #content>
+      <mat-card-content>
+        @if (dashboard().enrolledCourses.length > 0) { @for (course of
+        dashboard().enrolledCourses; track course.courseId) {
+        <div
+          class="course-card border rounded p-4 mb-4 shadow-sm"
+          [class.expanded]="expandedCourseId === course.courseId"
+          (click)="toggleCourse(course.courseId)"
+        >
+          <div class="d-flex justify-content-between align-items-start">
+            <div class="flex-grow-1">
+              <h3 class="text-primary mb-2">{{ course.name }}</h3>
+              <p><strong>Credits:</strong> {{ course.creditHours }}</p>
+              <p class="text-muted">
+                <small>Enrolled on: {{ course.enrolledOn | date }}</small>
+              </p>
+            </div>
+            <img
+              [src]="courseImgUrl"
+              alt="Course"
+              class="img-thumbnail ms-3"
+              width="140"
+              height="140"
+            />
+          </div>
+
+          <div *ngIf="expandedCourseId === course.courseId" class="mt-3">
+            <p><strong>Description:</strong> {{ course.description }}</p>
+            <button
+              mat-raised-button
+              color="warn"
+              class="drop-button"
+              (click)="dropCourse(course.courseId, $event)"
+            >
+              <mat-icon>delete</mat-icon> Drop Course
+            </button>
+          </div>
+        </div>
+        } } @else {
+        <p class="text-muted text-center">
+          You are not enrolled in any courses yet.
+        </p>
+        }
+      </mat-card-content>
+    </ng-template>
+  </mat-card>
+</div>
