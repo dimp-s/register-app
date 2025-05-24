@@ -31,6 +31,11 @@ export const routes: Routes = [
   },
 
   {
+    path: 'studentDashboard',
+    loadComponent: () =>
+      import('./pages/student-dashboard/student-dashboard.component'),
+  },
+  {
     path: 'unauthorized',
     loadComponent: () =>
       import('./pages/error/unauthorized/unauthorized.component'),

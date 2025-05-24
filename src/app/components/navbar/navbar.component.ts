@@ -21,6 +21,7 @@ import { AuthService } from '../../services/auth/auth.service';
       } @else {
       <span class="me-4 fw-bold">Welcome {{ authService.userName() }}!</span>
       <a mat-button routerLink="/browseCourse">Browse Courses</a>
+      <a mat-button routerLink="/studentDashboard">Dashboard</a>
       }
 
       <!-- Logout stays after all other elements -->

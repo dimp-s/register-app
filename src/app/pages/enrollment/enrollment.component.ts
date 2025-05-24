@@ -43,10 +43,12 @@ export default class EnrollmentComponent {
     this.loading.set(true);
     this.enrollmentService.getAvailableCourses().subscribe({
       next: (res) => {
-        console.log(res.data);
-        this.courses.set(res.data ?? []);
-        console.log(this.courses());
-        this.loading.set(false);
+        setTimeout(() => {
+          console.log(res.data);
+          this.courses.set(res.data ?? []);
+          console.log(this.courses());
+          this.loading.set(false);
+        }, 1000);
       },
       error: () => {
         this.snackbar.open('Failed to load courses', 'Close', {
