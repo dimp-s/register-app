@@ -33,4 +33,11 @@ export class EnrollmentService {
       {}
     );
   }
+
+  dropCourse(courseId: number): Observable<{ message: string }> {
+    return this.http.delete<{ message: string }>(
+      `${this.apiUrl}/drop/${courseId}`,
+      {}
+    );
+  }
 }

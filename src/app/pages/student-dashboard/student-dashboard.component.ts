@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { EnrollmentService } from '../../services/enrollment/enrollment.service';
 const defaultDashboard: StudentDashboardDto = {
   firstName: '',
   lastName: '',
@@ -39,6 +40,7 @@ export default class StudentDashboardComponent {
   courseImgUrl =
     'https://static.vecteezy.com/system/resources/previews/024/043/963/original/book-icon-clipart-transparent-background-free-png.png';
   private dashboardService = inject(StudentDashboardService);
+  private enrollmentService = inject(EnrollmentService);
   private snackbar = inject(MatSnackBar);
   loading = signal(false);
 
@@ -108,15 +110,18 @@ export default class StudentDashboardComponent {
   dropCourse(courseId: number, event: MouseEvent) {
     event.stopPropagation(); // prevent toggle from triggering
     if (confirm('Are you sure you want to drop this course?')) {
-      // call backend (stubbed for now)
-      this._dashboard.update((d) => ({
-        ...d,
-        enrolledCourses: d.enrolledCourses.filter(
-          (c) => c.courseId !== courseId
-        ),
-      }));
-      this.snackbar.open('Course dropped successfully.', 'Close', {
-        duration: 3000,
+      this.enrollmentService.dropCourse(courseId).subscribe({
+        next: (res) => {
+          this.snackbar.open(res.message, 'Close', {
+            duration: 3000,
+          });
+          this.loadDashboard();
+        },
+        error: (res) => {
+          this.snackbar.open(res.message, 'Close', {
+            duration: 3000,
+          });
+        },
       });
     }
   }
