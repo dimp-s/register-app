@@ -11,6 +11,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CourseDetailDialogComponent } from '../../components/courseDetail/course-detail.component';
 import { CommonModule } from '@angular/common';
+import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-enrollment',
@@ -21,6 +24,8 @@ import { CommonModule } from '@angular/common';
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   templateUrl: './enrollment.component.html',
   styleUrl: './enrollment.component.css',
@@ -34,6 +39,41 @@ export default class EnrollmentComponent {
   enrollmentService = inject(EnrollmentService);
   snackbar = inject(MatSnackBar);
   dialog = inject(MatDialog);
+
+  //for searching courses
+  searchTerm$ = new Subject<string>();
+  searchResults = signal<EnrollmentDto[]>([]);
+  searching = signal(false);
+  ngOnInit() {
+    this.searchTerm$
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap((query) => {
+          this.searching.set(true);
+          return this.enrollmentService.searchCourse(query);
+        })
+      )
+      .subscribe({
+        next: (res) => {
+          this.searchResults.set(res.data ?? []);
+          this.searching.set(false);
+        },
+        error: () => {
+          this.snackbar.open('Search failed', 'Close', { duration: 3000 });
+          this.searching.set(false);
+        },
+      });
+  }
+
+  onSearchChange(event: Event) {
+    const query = (event.target as HTMLInputElement).value.trim();
+    if (query.length >= 2) {
+      this.searchTerm$.next(query);
+    } else {
+      this.searchResults.set([]);
+    }
+  }
 
   constructor() {
     this.fetchCourses();

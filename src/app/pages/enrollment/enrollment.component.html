@@ -1,3 +1,59 @@
+<div class="mb-4">
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Search for a course</mat-label>
+    <input
+      matInput
+      type="text"
+      placeholder="Start typing..."
+      (input)="onSearchChange($event)"
+    />
+  </mat-form-field>
+</div>
+
+<!-- SEARCH RESULTS -->
+<div *ngIf="searchResults().length > 0" class="mb-4">
+  <h3 class="mb-3">Search Results</h3>
+  <div class="row g-4">
+    @for (course of searchResults(); track course.courseId) {
+    <div class="col-md-6 col-lg-4">
+      <mat-card
+        class="h-100 shadow-sm hover-card"
+        (click)="openCourseDialog(course)"
+        style="cursor: pointer"
+        matTooltip="Click to view details"
+      >
+        <mat-card-header>
+          <div class="d-flex justify-content-between align-items-center w-100">
+            <span class="h5 mb-0">{{ course.courseName }}</span>
+            <span
+              *ngIf="course.isEnrolled"
+              class="badge text-bg-success fs-6 px-3 py-2"
+              style="font-weight: 600"
+            >
+              Enrolled
+            </span>
+          </div>
+        </mat-card-header>
+        <div class="text-center p-2">
+          <img
+            mat-card-image
+            [src]="courseImgUrl"
+            alt="Course Image"
+            class="img-fluid w-75"
+          />
+        </div>
+        <mat-card-content>
+          <p>Credit Hours: {{ course.creditHours }}</p>
+          <p *ngIf="course.isEnrolled" class="text-success fw-bold">
+            You are already enrolled in this course.
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    }
+  </div>
+</div>
+
 <div class="container mt-4">
   <h2 class="mb-4">Available Courses</h2>
 

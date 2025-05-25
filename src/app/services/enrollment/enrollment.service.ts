@@ -40,4 +40,11 @@ export class EnrollmentService {
       {}
     );
   }
+
+  searchCourse(query: string): Observable<ResponseDto<EnrollmentDto[]>> {
+    return this.http.get<ResponseDto<EnrollmentDto[]>>(
+      `${this.apiUrl}/search`,
+      { params: { query } }
+    );
+  }
 }
